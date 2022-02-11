@@ -2,19 +2,20 @@
 import 'source-map-support/register';
 import * as cdk from 'aws-cdk-lib';
 import { AppStack } from '../lib/app-stack';
-import { InfraStack } from '../lib/infra-stack';
+import { BaseStack } from '../lib/base-stack';
 
-const app = new cdk.App();
 const deployEnvironment = process.env.DEPLOY_ENVIRONMENT || 'stg';
+const app = new cdk.App();
 
-// Khởi tạo Infra Stack
-new InfraStack(app, 'InfraStack', {
-  stackName: `template-infra-stack-${deployEnvironment}`,
+// Khởi tạo Base Stack
+const baseStack = new BaseStack(app, 'BaseStack', {
+  stackName: `template-base-stack-${deployEnvironment}`,
   deployEnvironment: deployEnvironment
 });
 
 // Khởi tạo App Stack
-new AppStack(app, 'AppStack', {
+const appStack = new AppStack(app, 'AppStack', {
   stackName: `templdate-app-stack-${deployEnvironment}`,
-  deployEnvironment: deployEnvironment
+  deployEnvironment: deployEnvironment,
+  baseStack: baseStack,
 });
