@@ -8,13 +8,14 @@ const app = new cdk.App();
 const deployEnvironment = process.env.DEPLOY_ENVIRONMENT || 'stg';
 
 // Khởi tạo Infra Stack
-new InfraStack(app, 'InfraStack', {
+const baseStack = new InfraStack(app, 'InfraStack', {
   stackName: `template-infra-stack-${deployEnvironment}`,
   deployEnvironment: deployEnvironment
 });
 
 // Khởi tạo App Stack
-new AppStack(app, 'AppStack', {
+const appStack = new AppStack(app, 'AppStack', {
+  baseStack: baseStack, // Thêm InfraStack vào AppStack như 1 prop để AppStack có thể gọi các resources từ InfraStack
   stackName: `templdate-app-stack-${deployEnvironment}`,
   deployEnvironment: deployEnvironment
 });
