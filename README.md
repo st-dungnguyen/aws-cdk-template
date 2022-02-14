@@ -9,6 +9,27 @@ The `cdk.json` file tells the CDK Toolkit how to execute your app.
 - npm version: 8.5.0
 - cdk version: 2.12.0
 
+## Source structure
+
+```
+├── bin
+│   ├── app.js // Khởi tạo đối tượng CloudFormation Stack
+├── lib
+│   ├── app
+│   │   ├── **/*.ts // Khai báo các aws services
+│   ├── infra
+│   │   ├── **/*.ts // Khai báo các aws services
+│   ├── app-stack.ts // Khởi tạo các đối tượng aws serivces đã khai báo trước đó
+│   ├── infra-stack.ts // Khởi tạo các đối tượng aws services đã khai báo trước đó
+├── src
+│   ├── common
+│   │   ├── *.ts // Shared code, khai báo mấy hàm hay dùng hoặc dùng chung
+│   ├── lambdas
+│   │   ├── **/handler.ts // Khai báo code xử lý handle cho các hàm lambda
+│   ├── services
+│   │   ├── **/*.ts // Phân nhỏ code xử lý logic để support cho các hàm handle ở lambda và có thể tái sử dụng
+```
+
 ## Useful commands
 
  * `npm run build`   compile typescript to js
