@@ -2,7 +2,7 @@
   "name": "aws-cdk-template",
   "version": "0.1.0",
   "bin": {
-    "aws-cdk-template": "bin/aws-cdk-template.js"
+    "aws-cdk-template": "bin/app.js"
   },
   "scripts": {
     "build": "tsc",
