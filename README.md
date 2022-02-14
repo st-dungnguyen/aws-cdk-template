@@ -14,13 +14,15 @@ The `cdk.json` file tells the CDK Toolkit how to execute your app.
 ```
 ├── bin
 │   ├── app.js // Khởi tạo các Stacks và cross stack attributes
+├── environments
+│   ├── env.js // Khởi tạo các biến môi trường
+├── layers
+│   ├── package.json // cài đặt thư viện dùng làm layer cho lambda function
 ├── lib
 │   ├── apigateway
 │   │   ├── infra.ts // Khởi tạo các đối tượng aws services
 │   │   ├── props.ts // Khai báo props
 │   │   ├── **/*.ts // Khai báo các aws services
-│   │   ├── home/infra.ts
-│   │   ├── users/infra.ts
 │   ├── database
 │   │   ├── infra.ts // Khởi tạo các đối tượng aws services
 │   │   ├── props.ts // Khai báo props
@@ -29,31 +31,18 @@ The `cdk.json` file tells the CDK Toolkit how to execute your app.
 │   │   ├── infra.ts // Khởi tạo các đối tượng aws services
 │   │   ├── props.ts // Khai báo props
 │   │   ├── **/*.ts // Khai báo các aws services
-│   │   ├── home/infra.ts
-│   │   ├── users/infra.ts
 │   ├── monitor
 │   │   ├── infra.ts // Khởi tạo các đối tượng aws services
 │   │   ├── props.ts // Khai báo props
 │   │   ├── **/*.ts // Khai báo các aws services
+│   ├── ...
 ├── src
 │   ├── common
-│   │   ├── *.ts // Shared code, khai báo mấy hàm hay dùng hoặc dùng chung
+│   │   ├── *.ts // Shared code, khai báo mấy hàm hay dùng, tái sử dụng
 │   ├── lambda
 │   │   ├── **/*.ts // Khai báo code xử lý handle cho các hàm lambda
-│   │   ├── home/index.ts
-│   │   ├── users/index.ts
-│   │   ├── users/show.ts
-│   │   ├── users/create.ts
-│   │   ├── users/update.ts
-│   │   ├── users/delete.ts
 │   ├── services
-│   │   ├── **/*.ts // Phân nhỏ code xử lý logic để support cho các hàm handle ở lambda và có thể tái sử dụng
-│   │   ├── home/index.ts
-│   │   ├── users/index.ts
-│   │   ├── users/show.ts
-│   │   ├── users/create.ts
-│   │   ├── users/update.ts
-│   │   ├── users/delete.ts
+│   │   ├── *.ts // Phân nhỏ code xử lý logic để support cho các hàm handle ở lambda
 ```
 
 ## Useful commands

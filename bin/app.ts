@@ -12,16 +12,25 @@ const app = new cdk.App();
 // initialize stacks
 const monitor = new MonitorStack(app, `monitor-stack-${env.DEPLOY_ENVIRONMENT}`, {}, env);
 
-const apiGatewayStack = new ApiGatewayStack(app, `apigateway-stack-${env.DEPLOY_ENVIRONMENT}`, {
-  // access cross stack as props
-  logGroup: monitor.logGroup,
-});
+const apiGatewayStack = new ApiGatewayStack(
+  app,
+  `apigateway-stack-${env.DEPLOY_ENVIRONMENT}`,
+  {
+    // access cross stack as props
+    apiGatewayLogs: monitor.apiGatewayLogs,
+  },
+  env
+);
 
-const databaseStack = new DatabaseStack(app, `database-stack-${env.DEPLOY_ENVIRONMENT}`, {});
+new DatabaseStack(app, `database-stack-${env.DEPLOY_ENVIRONMENT}`, {}, env);
 
-const lambdaStack = new LambdaStack(app, `lambda-stack-${env.DEPLOY_ENVIRONMENT}`, {
-  // access cross stack as props
-  homeApiGateway: apiGatewayStack.homeApiGateway,
-  userApiGateway: apiGatewayStack.userApiGateway,
-}, env);
+new LambdaStack(
+  app,
+  `lambda-stack-${env.DEPLOY_ENVIRONMENT}`,
+  {
+    // access cross stack as props
+    todoApiGateway: apiGatewayStack.todoApiGateway,
+  },
+  env
+);
 
