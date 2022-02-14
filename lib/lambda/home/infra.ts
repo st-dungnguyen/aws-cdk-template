@@ -2,9 +2,10 @@ import { Construct } from 'constructs';
 import { LambdaProps } from '../props';
 import * as lambda from 'aws-cdk-lib/aws-lambda';
 import { LambdaIntegration } from 'aws-cdk-lib/aws-apigateway';
+import { EnvironmentVariables } from '../../../environments/env';
 
 export class HomeFunction{
-  constructor(scope: Construct, props: LambdaProps) {
+  constructor(scope: Construct, props: LambdaProps, env: EnvironmentVariables) {
 
     const homeFunction = new lambda.Function(scope, `HomeFunction-${process.env.DEPLOY_ENVIRONMENT}`, {
       runtime: lambda.Runtime.NODEJS_14_X,
