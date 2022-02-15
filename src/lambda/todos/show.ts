@@ -1,13 +1,32 @@
 import { TodoServices } from '../../services/todos';
-import { success, notFound } from '../../common/http-response';
+import { successResponse, notFoundResponse, response } from '../../common/http-response';
+import { HTTP_BAD_REQUEST, HTTP_INTERNAL_SERVER_ERROR } from '../../common/http-response';
 
-exports.handler = async function (event: any) {
-  const tableName = process.env.TABLE_NAME || '';
-  const service = new TodoServices(tableName);
-  const todo = await service.getItem(event.pathParameters.id);
+const TABLE_NAME = process.env.TABLE_NAME || '';
+const PRIMARY_KEY = process.env.PRIMARY_KEY || '';
 
-  if(!todo) {
-    return notFound({message: 'Todo not found'});
+export const handler = async (event: any = {}): Promise<any> => {
+  const requestId = event.pathParameters.id;
+  if (!requestId) {
+    return response(HTTP_BAD_REQUEST, 'Missing path parameter id');
   }
-  return success(todo);
+
+  const params = {
+    TableName: TABLE_NAME,
+    Key: {
+      [PRIMARY_KEY]: requestId
+    }
+  }
+
+  try {
+    const service = new TodoServices();
+    const todo = await service.getItem(params);
+    if (!todo) {
+      return notFoundResponse('Todo not found');
+    }
+    return successResponse(todo);
+  }
+  catch (err) {
+    return response(HTTP_INTERNAL_SERVER_ERROR, JSON.stringify(err));
+  }
 }

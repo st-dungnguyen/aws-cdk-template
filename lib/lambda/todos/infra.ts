@@ -13,7 +13,8 @@ export class TodosFunction{
 
     // Create Lambda Layers
     const layer = new lambda.LayerVersion(scope, `todos-${env.DEPLOY_ENVIRONMENT}-lambda-layer`, {
-      code: lambda.Code.fromAsset('./layers'),
+      layerVersionName: `aws-cdk-template-bundle-layer`,
+      code: lambda.Code.fromAsset('layers'),
       compatibleRuntimes: [lambda.Runtime.NODEJS_14_X]
     });
 
@@ -47,7 +48,8 @@ export class TodosFunction{
         code: lambda.Code.fromAsset('./dist/src'),
         layers: [layer],
         environment: {
-          TABLE_NAME: todosTable.tableName
+          TABLE_NAME: todosTable.tableName,
+          PRIMARY_KEY: env.TODOS_PKEY,
         }
       }
     );
@@ -62,7 +64,8 @@ export class TodosFunction{
         code: lambda.Code.fromAsset('./dist/src'),
         layers: [layer],
         environment: {
-          TABLE_NAME: todosTable.tableName
+          TABLE_NAME: todosTable.tableName,
+          PRIMARY_KEY: env.TODOS_PKEY,
         }
       }
     );
@@ -77,7 +80,8 @@ export class TodosFunction{
         code: lambda.Code.fromAsset('./dist/src'),
         layers: [layer],
         environment: {
-          TABLE_NAME: todosTable.tableName
+          TABLE_NAME: todosTable.tableName,
+          PRIMARY_KEY: env.TODOS_PKEY,
         }
       }
     );
@@ -92,7 +96,8 @@ export class TodosFunction{
         code: lambda.Code.fromAsset('./dist/src'),
         layers: [layer],
         environment: {
-          TABLE_NAME: todosTable.tableName
+          TABLE_NAME: todosTable.tableName,
+          PRIMARY_KEY: env.TODOS_PKEY
         }
       }
     );

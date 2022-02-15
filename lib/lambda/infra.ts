@@ -7,6 +7,6 @@ export class LambdaStack extends Stack {
   constructor(scope: Construct, id: string, props: LambdaProps, env: EnvironmentVariables) {
     super(scope, id, props)
 
-    const todosFunction = new TodosFunction(this, props, env);
+    new TodosFunction(this, props, env);
   }
 }

@@ -1,31 +1,30 @@
 import * as AWS from 'aws-sdk';
 
 export class TodoServices {
-  database: AWS.DynamoDB;
-  tableName: string;
-  constructor(tableName: string) {
-    this.database = new AWS.DynamoDB();
-    this.tableName = tableName;
+  database: AWS.DynamoDB.DocumentClient;
+  constructor() {
+    this.database = new AWS.DynamoDB.DocumentClient();
   }
 
-  async listItems() {
-    const dataTable = await this.database.scan({ TableName: this.tableName}).promise();
-    const items = dataTable.Items;
-    if(!items) {
-      return undefined
-    }
-    return items.map((value)=>AWS.DynamoDB.Converter.unmarshall(value));
+  async listItems(params: any = {}) {
+    const dataTable = await this.database.scan(params).promise();
+    return dataTable.Items;
   }
 
-  async getItem(id: string) {
-    const dataTable = await this.database.getItem({
-      TableName: this.tableName,
-      Key: { 'id': { N: id} }
-    }).promise();
-    const item = dataTable.Item;
-    if(!item) {
-      return undefined
-    }
-    return AWS.DynamoDB.Converter.unmarshall(item);
+  async getItem(params: any = {}) {
+    const dataTable = await this.database.get(params).promise();
+    return dataTable.Item;
+  }
+
+  async putItem(params: any = {}) {
+    await this.database.put(params).promise();
+  }
+
+  async updateItem(params: any = {}){
+    await this.database.update(params).promise();
+  }
+
+  async deleteItem(params: any = {}) {
+    await this.database.delete(params).promise();
   }
 }

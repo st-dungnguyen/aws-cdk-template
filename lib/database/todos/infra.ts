@@ -10,7 +10,7 @@ export class TodosTable {
       tableName: env.TODOS_TABLE,
       partitionKey: {
         name: env.TODOS_PKEY,
-        type: dynamodb.AttributeType.NUMBER
+        type: dynamodb.AttributeType.STRING
       }
     });
   }
